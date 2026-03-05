@@ -2,91 +2,85 @@
 
 import * as React from "react"
 import {
-  LayoutDashboardIcon,
-  CheckSquareIcon,
-  FolderKanbanIcon,
-  UsersIcon,
-  BarChart3Icon,
+  ArrowUpCircleIcon,
+  BarChartIcon,
   BellIcon,
+  FolderIcon,
+  LayoutDashboardIcon,
+  ListIcon,
   SettingsIcon,
   UserCircleIcon,
+  UsersIcon,
 } from "lucide-react"
 
-import { NavMain } from "./nav-main"
-import { NavSecondary } from "./nav-secondary"
-import { NavUser } from "./nav-user"
+import { NavMain } from "@/components/nav-main"
+import { NavSecondary } from "@/components/nav-secondary"
+import { NavUser } from "@/components/nav-user"
+import Link from "next/link"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import Link from "next/link"
 import { useUser } from "@clerk/nextjs"
-
 const data = {
+  user: {
+    name: "shadcn",
+    email: "m@example.com",
+    avatar: "/avatars/shadcn.jpg",
+  },
   navMain: [
     {
-      id: 1,
       title: "Dashboard",
       url: "/dashboard",
       icon: LayoutDashboardIcon,
     },
     {
-      id: 2,
       title: "Tasks",
       url: "/tasks",
-      icon: CheckSquareIcon,
+      icon: ListIcon,
     },
+    // {
+    //   title: "Projects",
+    //   url: "/projects",
+    //   icon: FolderIcon,
+    // },
     {
-      id: 3,
-      title: "Projects",
-      url: "/projects",
-      icon: FolderKanbanIcon,
-    },
-  ],
-
-  navSecondary: [
-    {
-      id: 4,
       title: "Team",
       url: "/team",
       icon: UsersIcon,
     },
-    {
-      id: 5,
-      title: "Analytics",
-      url: "/analytics",
-      icon: BarChart3Icon,
-    },
+    // {
+    //   title: "Analytics",
+    //   url: "/analytics",
+    //   icon: BarChartIcon,
+    // },
   ],
-
-  navAccount: [
-    {
-      id: 6,
-      title: "Notifications",
-      url: "/notifications",
-      icon: BellIcon,
-    },
-    {
-      id: 7,
+  navSecondary: [
+     {
       title: "Settings",
       url: "/settings",
       icon: SettingsIcon,
     },
-    {
-      id: 8,
-      title: "Profile",
-      url: "/profile",
-      icon: UserCircleIcon,
-    },
+    // {
+    //   title: "Profile",
+    //   url: "/profile",
+    //   icon: UserCircleIcon,
+    // },
+    // {
+    //   title: "Notifications",
+    //   url: "/notifications",
+    //   icon: BellIcon,
+    // },
   ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useUser()
+  const {user} = useUser()
   const userData = user
     ? {
         name: user.fullName || '',
@@ -94,24 +88,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         avatar: user.imageUrl,
       }
     : {
-        name: 'User',
-        email: 'user@example.com',
+        name: '',
+        email: '',
         avatar: '',
-      };
-
+  };
   return (
-    <Sidebar collapsible="none" {...props}>
+    <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <Link href="/" className="flex gap-1.5 items-center">
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary">
-                <span className="text-white font-bold text-sm">ST</span>
-              </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
                   SmartTask AI
                 </span>
+                {/* <span className="truncate text-xs">Enterprise</span> */}
               </div>
             </Link>
           </SidebarMenuItem>
@@ -119,8 +110,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavSecondary items={data.navSecondary} />
-        <NavSecondary items={data.navAccount} className="mt-auto" />
+        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={userData} />

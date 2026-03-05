@@ -51,19 +51,16 @@ const AvatarGroup = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { max?: number }
 >(({ className, children, max = 4, ...props }, ref) => {
-  const visibleChildren = React.Children.toArray(children).slice(0, max)
-  const remaining = React.Children.count(children) - max
+  const childrenArray = React.Children.toArray(children)
+  const visibleChildren = childrenArray.slice(0, max)
+  const remainingCount = childrenArray.length - max
 
   return (
-    <div
-      ref={ref}
-      className={cn("flex -space-x-2", className)}
-      {...props}
-    >
+    <div ref={ref} className={cn("flex -space-x-2", className)} {...props}>
       {visibleChildren}
-      {remaining > 0 && (
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted border-2 border-background text-xs font-medium">
-          +{remaining}
+      {remainingCount > 0 && (
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-xs font-medium">
+          +{remainingCount}
         </div>
       )}
     </div>

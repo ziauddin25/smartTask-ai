@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Sparkles, ChevronLeft, ChevronRight } from "lucide-react"
+import { Sparkles } from "lucide-react"
 import { aiInsights } from "@/data/mockData"
 import { AIChat } from "./AIChat"
 import {
@@ -21,25 +21,13 @@ export function AIInsightCard() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      goToNext()
-    }, 10000)
+      setIsAnimating(true)
+      setCurrentIndex((prev) => (prev + 1) % aiInsights.length)
+      setTimeout(() => setIsAnimating(false), 300)
+    }, 3000)
 
     return () => clearInterval(interval)
-  }, [currentIndex])
-
-  const goToNext = () => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setCurrentIndex((prev) => (prev + 1) % aiInsights.length)
-    setTimeout(() => setIsAnimating(false), 300)
-  }
-
-  const goToPrev = () => {
-    if (isAnimating) return
-    setIsAnimating(true)
-    setCurrentIndex((prev) => (prev - 1 + aiInsights.length) % aiInsights.length)
-    setTimeout(() => setIsAnimating(false), 300)
-  }
+  }, [])
 
   return (
     <>
@@ -58,39 +46,9 @@ export function AIInsightCard() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="hidden md:flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white hover:bg-white/20 h-8 w-8"
-                  onClick={goToPrev}
-                  aria-label="Previous insight"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </Button>
-                <div className="flex gap-1">
-                  {aiInsights.map((_, idx) => (
-                    <div
-                      key={idx}
-                      className={`h-1.5 rounded-full transition-all ${
-                        idx === currentIndex ? "w-6 bg-white" : "w-1.5 bg-white/50"
-                      }`}
-                    />
-                  ))}
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="text-white hover:bg-white/20 h-8 w-8"
-                  onClick={goToNext}
-                  aria-label="Next insight"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
               <Sheet open={isChatOpen} onOpenChange={setIsChatOpen}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" className="text-white hover:bg-white/20 ml-2">
+                  <Button variant="ghost" className="text-white hover:bg-white/20">
                     Ask AI
                   </Button>
                 </SheetTrigger>

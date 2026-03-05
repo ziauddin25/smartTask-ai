@@ -1,61 +1,56 @@
 "use client"
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { PlusCircleIcon, type LucideIcon } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
+import { MailIcon, PlusCircleIcon, type LucideIcon } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
 import {
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-interface NavItem {
-  id?: number
-  title: string
-  url: string
-  icon?: LucideIcon
-}
+export function NavMain({
+  items,
+}: {
+  items: {
+    title: string
+    url: string
+    icon?: LucideIcon
+  }[]
+}) {
+  // const router = useRouter()
+  // const isActive = (url: string) => {
+  //   const currentPath = router.pathname || "/"
+  //   return currentPath === url || (url !== "/dashboard" && currentPath.startsWith(url))
+  // }
 
-interface NavMainProps {
-  items: NavItem[]
-  label?: string
-}
+  const router = useRouter()
+const pathname = usePathname()
 
-export function NavMain({ items, label }: NavMainProps) {
-  const pathname = usePathname()
+const isActive = (url: string) => {
+  return pathname === url || pathname.startsWith(url + "/")
+}
 
   return (
     <SidebarGroup>
-      {label && <SidebarGroupLabel>{label}</SidebarGroupLabel>}
       <SidebarGroupContent className="flex flex-col gap-2">
         <SidebarMenu>
-          <SidebarMenuItem className="flex items-center gap-2">
-            <SidebarMenuButton
-              tooltip="Quick Create"
-              className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
-            >
-              <PlusCircleIcon />
-              <span>Quick Create</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton 
-                asChild 
-                isActive={pathname === item.url}
+              <SidebarMenuButton
                 tooltip={item.title}
+                onClick={() => router.push(item.url)}
+                className={`${
+                  isActive(item.url)
+                    ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                    : "hover:bg-sidebar-accent/5"
+                }`}
               >
-                <Link href={item.url}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                </Link>
+                {item.icon && <item.icon />}
+                <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

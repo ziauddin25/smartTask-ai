@@ -78,7 +78,7 @@ function TodayTaskCard({ task, onComplete, onViewDetails }: TodayTaskCardProps) 
 
   return (
     <div 
-      className={`flex items-center gap-3 p-3 rounded-lg border hover:bg-accent transition-colors cursor-pointer ${
+      className={`flex items-center gap-3 rounded-lg border hover:bg-accent transition-colors cursor-pointer ${
         isCompleting ? "opacity-50 scale-95 transition-all" : ""
       }`}
     >

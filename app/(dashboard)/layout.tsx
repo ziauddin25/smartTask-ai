@@ -1,11 +1,9 @@
-"use client"
-
-import { ReactNode } from "react";
-import { AppSidebar } from "@/components/app-sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
+import { SectionCards } from "@/components/section-cards";
 import { SiteHeader } from "@/components/site-header";
-import {
-  SidebarProvider,
-} from "@/components/ui/sidebar"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ReactNode } from "react";
+import { TasksProvider } from "@/contexts/TasksContext";
 
 export default function DashboardLayout({
   children,
@@ -14,15 +12,20 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex w-full">
-        <AppSidebar className="w-64" />
-        <div className="flex-1 flex flex-col">
+    <TasksProvider>
+      <div className="flex min-h-screen w-full">
+        <AppSidebar
+          variant="inset"
+          className="w-64 flex-shrink-0 sticky top-0 h-screen"
+        />
+        <SidebarInset className="flex-1 w-full min-h-screen">
           <SiteHeader />
-          <div className="flex-1 p-6">
+          <div className="p-6">
             {children}
           </div>
-        </div>
+        </SidebarInset>
       </div>
+      </TasksProvider>
     </SidebarProvider>
   );
 }

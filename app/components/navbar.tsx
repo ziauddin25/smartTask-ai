@@ -62,13 +62,11 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="container navbar-container">
         {/* Logo */}
-        <Link href="/" className="logo">
-          <svg className="logo-icon" viewBox="0 0 32 32" fill="none">
-            <rect width="32" height="32" rx="8" fill="currentColor"/>
-            <path d="M8 16L14 22L24 10" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-          SmartTask AI
-        </Link>
+        <a href="/" className="flex items-center gap-2.5 no-underline">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/smarttask-logo.svg" alt="SmartTask AI" className="w-9 h-9" />
+          <span className="text-lg font-extrabold tracking-tight text-foreground">SmartTask AI</span>
+        </a>
 
         {/* Desktop Navigation Links - Visible when NOT signed in */}
         {isSignedIn && (

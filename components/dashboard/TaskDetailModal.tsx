@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarGroup, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
 import { Textarea } from "@/components/ui/textarea"
 import { 
   Select, 
@@ -55,6 +55,10 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
   const [newComment, setNewComment] = useState("")
   const [isEditingTitle, setIsEditingTitle] = useState(false)
   const [isEditingDescription, setIsEditingDescription] = useState(false)
+  const [taskStatus, setTaskStatus] = useState<Task["status"]>("todo")
+  const [taskPriority, setTaskPriority] = useState<Task["priority"]>("medium")
+  const [taskCategory, setTaskCategory] = useState<Task["category"]>("work")
+  const [taskDeadline, setTaskDeadline] = useState("")
 
   const comments = task ? getTaskComments(task.id) : []
 
@@ -62,6 +66,10 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
     if (task) {
       setEditedTitle(task.title)
       setEditedDescription(task.description)
+      setTaskStatus(task.status)
+      setTaskPriority(task.priority)
+      setTaskCategory(task.category)
+      setTaskDeadline(task.deadline)
     }
   }, [task])
 
@@ -82,19 +90,26 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
   }
 
   const handleStatusChange = (status: string) => {
-    updateTask(task.id, { status: status as Task["status"] })
+    const newStatus = status as Task["status"]
+    setTaskStatus(newStatus)
+    updateTask(task.id, { status: newStatus })
     toast.info(`Task moved to ${status}`)
   }
 
   const handlePriorityChange = (priority: string) => {
-    updateTask(task.id, { priority: priority as Task["priority"] })
+    const newPriority = priority as Task["priority"]
+    setTaskPriority(newPriority)
+    updateTask(task.id, { priority: newPriority })
   }
 
   const handleCategoryChange = (category: string) => {
-    updateTask(task.id, { category: category as Task["category"] })
+    const newCategory = category as Task["category"]
+    setTaskCategory(newCategory)
+    updateTask(task.id, { category: newCategory })
   }
 
   const handleDeadlineChange = (deadline: string) => {
+    setTaskDeadline(deadline)
     updateTask(task.id, { deadline })
   }
 
@@ -172,9 +187,9 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
           <div className="grid grid-cols-3 gap-4">
             <div className="space-y-2">
               <Label>Status</Label>
-              <Select value={task.status} onValueChange={handleStatusChange}>
+              <Select value={taskStatus} onValueChange={handleStatusChange}>
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="todo">To Do</SelectItem>
@@ -185,9 +200,9 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
             </div>
             <div className="space-y-2">
               <Label>Priority</Label>
-              <Select value={task.priority} onValueChange={handlePriorityChange}>
+              <Select value={taskPriority} onValueChange={handlePriorityChange}>
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="high">High</SelectItem>
@@ -198,9 +213,9 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
             </div>
             <div className="space-y-2">
               <Label>Category</Label>
-              <Select value={task.category} onValueChange={handleCategoryChange}>
+              <Select value={taskCategory} onValueChange={handleCategoryChange}>
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="work">Work</SelectItem>
@@ -218,7 +233,7 @@ export function TaskDetailModal({ task, open, onOpenChange }: TaskDetailModalPro
             <Label>Deadline</Label>
             <Input
               type="date"
-              value={task.deadline}
+              value={taskDeadline}
               onChange={(e) => handleDeadlineChange(e.target.value)}
             />
           </div>

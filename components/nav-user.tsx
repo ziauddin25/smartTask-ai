@@ -29,8 +29,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
-import { useClerk } from "@clerk/nextjs"
-import { useRouter } from "next/navigation"
 
 export function NavUser({
   user,
@@ -42,13 +40,6 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
-  const { signOut } = useClerk()
-  const router = useRouter()
-
-  const handleSignOut = async () => {
-    await signOut()
-    router.push("/auth/sign-in")
-  }
 
   return (
     <SidebarMenu>
@@ -73,7 +64,7 @@ export function NavUser({
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-[--radix-dropdown-menu-trigger-width] bg-white min-w-56 rounded-lg"
+            className="w-[--radix-dropdown-menu-trigger-width] bg-white  min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "bottom"}
             align="end"
             sideOffset={4}
@@ -94,16 +85,16 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Link href="/account">
-                  <UserCircleIcon className="mr-2" />
-                  Account
-                </Link>
+              <Link href='/account'>
+              <DropdownMenuItem>
+                <UserCircleIcon />
+                Account
               </DropdownMenuItem>
+              </Link>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleSignOut}>
-              <LogOutIcon className="mr-2" />
+            <DropdownMenuItem>
+              <LogOutIcon />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

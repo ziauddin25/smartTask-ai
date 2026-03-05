@@ -1,8 +1,6 @@
 "use client"
 
 import * as React from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { LucideIcon } from "lucide-react"
 
 import {
@@ -13,36 +11,27 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-interface NavItem {
-  id?: number
-  title: string
-  url: string
-  icon: LucideIcon
-}
-
-interface NavSecondaryProps {
-  items: NavItem[]
-  label?: string
-}
-
-export function NavSecondary({ items, label, ...props }: NavSecondaryProps & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
-  const pathname = usePathname()
-
+export function NavSecondary({
+  items,
+  ...props
+}: {
+  items: {
+    title: string
+    url: string
+    icon: LucideIcon
+  }[]
+} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton 
-                asChild 
-                isActive={pathname === item.url}
-                tooltip={item.title}
-              >
-                <Link href={item.url}>
+              <SidebarMenuButton asChild>
+                <a href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
-                </Link>
+                </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
