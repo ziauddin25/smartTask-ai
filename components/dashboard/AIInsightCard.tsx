@@ -52,7 +52,7 @@ export function AIInsightCard() {
                     Ask AI
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[400px] sm:w-[540px]">
+                <SheetContent side="right" className="w-[400px] bg-red sm:w-[540px]">
                   <SheetHeader>
                     <SheetTitle>AI Assistant</SheetTitle>
                   </SheetHeader>

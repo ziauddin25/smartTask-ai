@@ -8,13 +8,18 @@ export default function Footer() {
       <div className="container">
         <div className="footer-content">
           <div className="footer-brand">
-            <Link href="/" className="logo" style={{ color: 'white' }}>
+            {/* <Link href="/" className="logo" style={{ color: 'white' }}>
               <svg className="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="32" height="32" rx="8" fill="currentColor"/>
                 <path d="M8 16L14 22L24 10" stroke="#4f46e5" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
               SmartTask AI
-            </Link>
+            </Link> */}
+             <a href="/" className="flex items-center gap-2.5 no-underline">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/smarttask-logo.svg" alt="SmartTask AI" className="w-9 h-9" />
+          <span className="text-lg font-extrabold tracking-tight text-foreground">SmartTask AI</span>
+        </a>
             <p>AI-powered task management to boost your productivity and achieve your goals.</p>
           </div>
           <div className="footer-section">

@@ -97,14 +97,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <Link href="/" className="flex gap-1.5 items-center">
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">
-                  SmartTask AI
-                </span>
-                {/* <span className="truncate text-xs">Enterprise</span> */}
-              </div>
-            </Link>
+              <a href="/" className="flex items-center gap-2.5 no-underline">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/smarttask-logo.svg" alt="SmartTask AI" className="w-9 h-9" />
+              <span className="text-lg font-extrabold tracking-tight text-foreground">SmartTask AI</span>
+            </a>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
