@@ -41,7 +41,7 @@ interface UserSettings {
 const defaultSettings: UserSettings = {
   language: "en",
   timezone: "UTC",
-  theme: "dark",
+  theme: "light",
   accentColor: "#7C3AED",
   sidebarStyle: "default",
   workspaceName: "SmartTask AI",

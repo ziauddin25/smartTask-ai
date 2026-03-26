@@ -10,7 +10,7 @@ interface ThemeSettings {
 }
 
 const defaultThemeSettings: ThemeSettings = {
-  theme: "dark",
+  theme: "light",
   accentColor: "#7C3AED",
   language: "en",
   sidebarStyle: "default",
@@ -20,7 +20,7 @@ function getSystemTheme(): "light" | "dark" {
   if (typeof window !== "undefined" && window.matchMedia) {
     return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
   }
-  return "dark"
+  return "light"
 }
 
 export function useTheme() {
@@ -56,13 +56,13 @@ export function useTheme() {
       try {
         const parsed = JSON.parse(savedSettings)
         setThemeSettings({
-          theme: parsed.theme || "dark",
+          theme: parsed.theme || "light",
           accentColor: parsed.accentColor || "#7C3AED",
           language: parsed.language || "en",
           sidebarStyle: parsed.sidebarStyle || "default",
         })
         applyThemeToDocument({
-          theme: parsed.theme || "dark",
+          theme: parsed.theme || "light",
           accentColor: parsed.accentColor || "#7C3AED",
           language: parsed.language || "en",
           sidebarStyle: parsed.sidebarStyle || "default",

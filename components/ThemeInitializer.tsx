@@ -4,7 +4,7 @@ import { useEffect } from "react"
 
 export function ThemeInitializer() {
   useEffect(() => {
-    let theme = "dark"
+    let theme = "light"
     let accentColor = "#7C3AED"
     let language = "en"
     
@@ -12,7 +12,7 @@ export function ThemeInitializer() {
       const savedSettings = localStorage.getItem("userSettings")
       if (savedSettings) {
         const parsed = JSON.parse(savedSettings)
-        theme = parsed.theme || "dark"
+        theme = parsed.theme || "light"
         accentColor = parsed.accentColor || "#7C3AED"
         language = parsed.language || "en"
       }

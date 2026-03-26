@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useUser, useClerk } from '@clerk/nextjs'
-import { User, LayoutDashboard, Settings, LogOut, Menu, X, Sun, Moon, Monitor, ChevronDown } from 'lucide-react'
+import { User, LayoutDashboard, Settings, LogOut, Menu, X, Sun, Moon, Monitor, ChevronDown, Check } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 
 export default function Navbar() {
@@ -129,28 +129,28 @@ export default function Navbar() {
         {/* Desktop Navigation - User Actions */}
         <div className="nav-actions desktop-nav">
           {/* Theme Dropdown */}
-          <div className="theme-dropdown-container" ref={themeDropdownRef}>
+          <div className="relative" ref={themeDropdownRef}>
             <button
               onClick={() => setThemeDropdownOpen(!themeDropdownOpen)}
-              className="theme-dropdown-btn"
+              className="!mt-3 bg-secondary text-muted-foreground cursor-pointer transition-all duration-200 hover:bg-primary hover:text-primary-foreground hover:border-primary"
               aria-label="Select theme"
             >
               {getCurrentThemeIcon()}
-              <ChevronDown size={14} className={`theme-chevron ${themeDropdownOpen ? 'open' : ''}`} />
+              {/* <ChevronDown size={14} className={`transition-transform duration-200 ${themeDropdownOpen ? 'rotate-180' : ''}`} /> */}
             </button>
             
             {themeDropdownOpen && (
-              <div className="theme-dropdown-menu">
+              <div className="absolute right-0 top-full mt-2 min-w-[160px] bg-white rounded-xl !p-4 shadow-lg z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                 {themeOptions.map((option) => (
                   <button
                     key={option.value}
                     onClick={() => handleThemeChange(option.value as 'light' | 'dark' | 'system')}
-                    className={`theme-dropdown-item ${themeSettings.theme === option.value ? 'active' : ''}`}
+                    className={`flex !mt-2 items-center text-black gap-2.5 w-full px-3 py-2.5 rounded-lg text-sm cursor-pointer transition-all duration-150 border-none bg-transparent ${themeSettings.theme === option.value ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-secondary'}`}
                   >
                     <option.icon size={18} />
                     <span>{option.label}</span>
                     {themeSettings.theme === option.value && (
-                      <span className="theme-check">✓</span>
+                      <Check size={16} className="ml-auto font-bold" />
                     )}
                   </button>
                 ))}
