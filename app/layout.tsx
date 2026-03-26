@@ -33,7 +33,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var settings = JSON.parse(localStorage.getItem('userSettings'));
-                  var theme = settings ? settings.theme : 'dark';
+                  var theme = settings ? settings.theme : 'light';
                   var accent = settings ? settings.accentColor : '#7C3AED';
                   document.documentElement.style.setProperty('--accent', accent);
                   if (theme === 'dark') {
@@ -48,7 +48,7 @@ export default function RootLayout({
                     }
                   }
                 } catch(e) {
-                  document.documentElement.classList.add('dark');
+                  document.documentElement.classList.add('light');
                 }
               })();
             `,
